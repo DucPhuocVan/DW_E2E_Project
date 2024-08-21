@@ -1,0 +1,12 @@
+transform_dbt:
+  outputs:
+    dev:
+      dbname: dw_e2e
+      host: host.docker.internal
+      pass: postgres
+      port: 5432
+      schema: dw
+      threads: 1
+      type: postgres
+      user: postgres
+  target: dev

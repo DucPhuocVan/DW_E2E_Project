@@ -1,0 +1,14 @@
+version: 2
+sources:
+  - name: stg
+    schema: public
+    database: dw_e2e
+    tables:
+      - name: calendar
+      - name: customers
+      - name: product_categories
+      - name: product_subcategories
+      - name: products
+      - name: returns
+      - name: sales
+      - name: territories
