@@ -1,6 +1,8 @@
 import psycopg2
 from psycopg2 import sql
 from airflow.providers.postgres.hooks.postgres import PostgresHook
+import pandas as pd
+import logging
 
 class Postgres:
     def __init__(self, conn_id: str):
@@ -60,3 +62,32 @@ class Postgres:
         self.cursor.execute(truncate_query)
         self.connection.commit()
         self.close()
+
+    def load_to_postgres(self, tables: dict):
+        for table_name, df in tables.items():
+            # Create or replace table
+            self.create_table(table_name, df.columns.to_list())
+            # Truncate the table before inserting new data
+            self.truncate_table(table_name)
+            # Insert data into the table
+            self.insert_data(table_name, df)
+
+    def fetch_to_dataframe(self, query: str) -> pd.DataFrame:
+        self.connect()
+        try:
+            if self.connection is None or self.cursor is None:
+                logging.error("Database connection is not initialized.")
+                raise ConnectionError("Database connection is not initialized.")
+
+            with self.connection.cursor() as cursor:
+                cursor.execute(query)
+                columns = [desc[0] for desc in cursor.description]
+                data = cursor.fetchall()
+                df = pd.DataFrame(data, columns=columns)
+            return df
+            
+        except Exception as e:
+            logging.error(f"Error fetching data from PostgreSQL: {e}")
+            raise
+        finally:
+            self.close()

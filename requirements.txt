@@ -5,3 +5,6 @@ psycopg2-binary
 pandas
 astronomer-cosmos
 dbt-postgres
+apache-airflow-providers-amazon==8.17.0
+emailmessage
+openpyxl
