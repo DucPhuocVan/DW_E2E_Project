@@ -15,3 +15,5 @@ tests
 packages.txt
 .dockerignore
 include/transform_dbt/dbt_venv
+dags/.airflowignore
+include/logs
