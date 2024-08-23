@@ -70,12 +70,12 @@ def dw_e2e():
     )
 
     @task
-    def send_reports():
+    def send_reports_by_email():
         email_service.extract_and_email_excel(
             query="SELECT * FROM dw_report.report_sale_region;",
             email_list_path='include/email_list.xlsx'
         )
 
-    [gg_drive_extract_other(), gg_drive_extract_sales(), s3_extract] >> transform_dw >> transform_report >> send_reports()
+    [gg_drive_extract_other(), gg_drive_extract_sales(), s3_extract] >> transform_dw >> transform_report >> send_reports_by_email()
 
 dw_e2e()
