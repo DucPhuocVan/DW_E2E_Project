@@ -17,3 +17,6 @@ packages.txt
 include/transform_dbt/dbt_venv
 dags/.airflowignore
 include/logs
+env/
+credentials.json
+email_list.xlsx

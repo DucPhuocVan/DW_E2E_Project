@@ -4,13 +4,15 @@ import smtplib
 import pandas as pd
 from io import BytesIO
 import logging
+from .postgres_loader import Postgres
+from airflow.models import Variable
 
 logger = logging.getLogger(__name__)
 
 class Email:
-    def __init__(self, conn_id, postgres):
+    def __init__(self, conn_id):
         self.conn_id = conn_id
-        self.postgres = postgres
+        self.postgres = Postgres(conn_id='postgres_connection')
         self.smtp_connection = self.get_smtp_connection()
         
     def get_smtp_connection(self):

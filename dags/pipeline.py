@@ -4,7 +4,6 @@ from include.src.postgres_loader import Postgres
 from include.src.send_email import Email
 from include.src.s3_extract import list_and_process_files
 from airflow.operators.python import PythonOperator
-import pandas as pd
 from datetime import datetime
 from airflow.models import Variable
 from include.transform_dbt.cosmos_config import DBT_CONFIG, DBT_PROJECT_CONFIG
@@ -12,7 +11,6 @@ from cosmos.airflow.task_group import DbtTaskGroup
 from cosmos.constants import LoadMode
 from cosmos.config import ProjectConfig, RenderConfig
 from cosmos.constants import TestBehavior
-
 
 # Define the DAG
 @dag(
@@ -25,8 +23,7 @@ def dw_e2e():
     drive = GoogleDrive()
     postgres = Postgres(conn_id='postgres_connection')
     email_service = Email(
-        conn_id='smtp_connection',
-        postgres=postgres
+        conn_id='smtp_connection'
     )
 
     @task
@@ -43,7 +40,7 @@ def dw_e2e():
         task_id='s3_extract',
         python_callable=list_and_process_files,
         op_kwargs={
-            'bucket_name': 'source.dwe2e',
+            'bucket_name': 'source.dw.e2e',
             'prefix': 'data/'
         },
     )
