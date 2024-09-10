@@ -1,11 +1,11 @@
 from airflow.hooks.base_hook import BaseHook
 from email.message import EmailMessage
-import smtplib
-import pandas as pd
-from io import BytesIO
-import logging
 from .postgres_loader import Postgres
 from airflow.models import Variable
+from io import BytesIO
+import smtplib
+import pandas as pd
+import logging
 
 logger = logging.getLogger(__name__)
 

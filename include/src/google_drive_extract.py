@@ -1,10 +1,8 @@
-# pip install google-api-python-client
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
-import io
 from googleapiclient.http import MediaIoBaseDownload
-import os
 from airflow.models import Variable
+import io
 import pandas as pd
 
 class GoogleDrive:

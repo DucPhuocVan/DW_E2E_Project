@@ -1,6 +1,5 @@
-import psycopg2
-from psycopg2 import sql
 from airflow.providers.postgres.hooks.postgres import PostgresHook
+from psycopg2 import sql
 import pandas as pd
 import logging
 
@@ -77,7 +76,7 @@ class Postgres:
         try:
             if self.connection is None or self.cursor is None:
                 logging.error("Database connection is not initialized.")
-                raise ConnectionError("Database connection is not initialized.")
+                raise
 
             with self.connection.cursor() as cursor:
                 cursor.execute(query)

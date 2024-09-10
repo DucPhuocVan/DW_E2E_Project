@@ -1,16 +1,12 @@
-import pandas as pd
-import io
 from airflow.providers.amazon.aws.hooks.s3 import S3Hook
 from .postgres_loader import Postgres
+import pandas as pd
+import io
 import logging
 
 logger = logging.getLogger(__name__)
 
 def process_s3_file(file_key, bucket_name):
-    """
-    Fetch a file from S3, process it into a DataFrame, and load it into PostgreSQL.
-    """
-    logger.info(f"Fetching file: {file_key}")
     try:
         s3_hook = S3Hook('s3_connection')
         file_obj = s3_hook.get_key(key=file_key, bucket_name=bucket_name)
@@ -37,10 +33,6 @@ def process_s3_file(file_key, bucket_name):
         logger.error(f"Error processing file {file_key}: {str(e)}")
 
 def list_and_process_files(bucket_name, prefix):
-    """
-    List files in an S3 bucket under a specified prefix and process each file.
-    """
-    logger.info(f"Listing files in S3 bucket {bucket_name} with prefix {prefix}")
     try:
         s3_hook = S3Hook('s3_connection')
         files = s3_hook.list_keys(bucket_name=bucket_name, prefix=prefix)
