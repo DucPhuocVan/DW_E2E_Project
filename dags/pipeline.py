@@ -1,5 +1,5 @@
 from airflow.decorators import dag, task
-from include.src.google_drive import GoogleDrive
+from include.src.google_drive_extract import GoogleDrive
 from include.src.postgres_loader import Postgres
 from include.src.send_email import Email
 from include.src.s3_extract import list_and_process_files
